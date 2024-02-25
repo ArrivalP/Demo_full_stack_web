@@ -1,28 +1,33 @@
 import React, { useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom';
+import Swal from 'sweetalert2';
 import 'bootstrap/dist/css/bootstrap.min.css'; // Import Bootstrap CSS
 interface LoginProps {
-    onLogin: () => void;
+  onLogin: (name: string,adminId:string) => void;
+  setName: React.Dispatch<React.SetStateAction<string>>;
+  setAdminId: React.Dispatch<React.SetStateAction<string>>;
 }
-const Login: React.FC<LoginProps> = ({onLogin}) => {
+const Login: React.FC<LoginProps> = ({onLogin,setName}) => {
     const [email, setEmail] = useState<string>('');
     const [password, setPassword] = useState<string>('');
-    const navigate = useNavigate();
   
     const handleLogin = async () => {
       try {
-        const response = await axios.post('http://localhost:9090/api/v1/user/login', {
+        const response = await axios.post('http://localhost:9090/api/v1/login', {
             email,
             password,
         });
-        if(response.data.status==true){
-            onLogin();
-            navigate('/dashboard');
+        if(response.data.status===true){
+            console.log(response.data.name);
+            setName(response.data.name);
+            onLogin(response.data.name,response.data.userId);
         }else{
-            alert(response.data.message);
+          Swal.fire({
+            text: response.data.message,
+            icon: 'error',
+            confirmButtonColor: "#d33",
+          });    
         }
-
       } catch (error) {
         alert(error);
       }
@@ -30,7 +35,7 @@ const Login: React.FC<LoginProps> = ({onLogin}) => {
   
     return (
       <div className="container mt-5">
-        <h2>เข้าสู่ระบบ</h2>
+        <h2>Login</h2>
         <form>
           <div className="mb-3">
             <label htmlFor="email" className="form-label">

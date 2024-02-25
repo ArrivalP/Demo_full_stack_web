@@ -6,14 +6,14 @@ interface RegisterProps {
 }
 
 interface FormData {
-  username: string;
+  name: string;
   email: string;
   password: string;
 }
 
 const Register: React.FC<RegisterProps> = ({ onRegister }) => {
   const [formData, setFormData] = useState<FormData>({
-    username: '',
+    name: '',
     email: '',
     password: '',
   });
@@ -32,8 +32,8 @@ const Register: React.FC<RegisterProps> = ({ onRegister }) => {
     const newErrors: { [key: string]: string } = {};
 
     // Basic validation example, you can add more checks based on your requirements
-    if (!formData.username.trim()) {
-      newErrors.username = 'Username is required';
+    if (!formData.name.trim()) {
+      newErrors.name = 'Username is required';
       isValid = false;
     }
 
@@ -58,9 +58,9 @@ const Register: React.FC<RegisterProps> = ({ onRegister }) => {
 
     if (validateForm()) {
       try {
-        const response = await axios.post('http://localhost:9090/api/v1/user/save', formData);
-
-        // Assuming your API responds with a 'success' property
+       
+        const response = await axios.post('http://localhost:9090/api/v1/register', formData);
+        
         if (response.data.success) {
           onRegister();
         } else {
@@ -88,14 +88,14 @@ const Register: React.FC<RegisterProps> = ({ onRegister }) => {
         </label>
         <input
           type="text"
-          className={`form-control ${errors.username ? 'is-invalid' : ''}`}
-          id="username"
-          name="username"
+          className={`form-control ${errors.name ? 'is-invalid' : ''}`}
+          id="name"
+          name="name"
           placeholder="Enter your username"
-          value={formData.username}
+          value={formData.name}
           onChange={handleChange}
         />
-        {errors.username && <div className="invalid-feedback">{errors.username}</div>}
+        {errors.name && <div className="invalid-feedback">{errors.name}</div>}
       </div>
       <div className="mb-3">
         <label htmlFor="email" className="form-label">
