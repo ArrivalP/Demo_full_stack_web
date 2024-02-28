@@ -58,10 +58,10 @@ const Register: React.FC<RegisterProps> = ({ onRegister }) => {
 
     if (validateForm()) {
       try {
-       
+
         const response = await axios.post('http://localhost:9090/api/v1/register', formData);
-        
-        if (response.data.success) {
+
+        if (response.data) {
           onRegister();
         } else {
           console.error('Registration Failed');
@@ -80,58 +80,58 @@ const Register: React.FC<RegisterProps> = ({ onRegister }) => {
 
   return (
     <div className="container mt-5">
-    <h2>Register</h2>
-    <form onSubmit={handleRegister}>
-      <div className="mb-3">
-        <label htmlFor="username" className="form-label">
-          Username
-        </label>
-        <input
-          type="text"
-          className={`form-control ${errors.name ? 'is-invalid' : ''}`}
-          id="name"
-          name="name"
-          placeholder="Enter your username"
-          value={formData.name}
-          onChange={handleChange}
-        />
-        {errors.name && <div className="invalid-feedback">{errors.name}</div>}
-      </div>
-      <div className="mb-3">
-        <label htmlFor="email" className="form-label">
-          Email
-        </label>
-        <input
-          type="email"
-          className={`form-control ${errors.email ? 'is-invalid' : ''}`}
-          id="email"
-          name="email"
-          placeholder="Enter your email"
-          value={formData.email}
-          onChange={handleChange}
-        />
-        {errors.email && <div className="invalid-feedback">{errors.email}</div>}
-      </div>
-      <div className="mb-3">
-        <label htmlFor="password" className="form-label">
-          Password
-        </label>
-        <input
-          type="password"
-          className={`form-control ${errors.password ? 'is-invalid' : ''}`}
-          id="password"
-          name="password"
-          placeholder="Enter your password"
-          value={formData.password}
-          onChange={handleChange}
-        />
-        {errors.password && <div className="invalid-feedback">{errors.password}</div>}
-      </div>
-      <button type="submit" className="btn btn-primary">
-        Register
-      </button>
-    </form>
-  </div>
+      <h2>Register</h2>
+      <form onSubmit={handleRegister}>
+        <div className="mb-3">
+          <label htmlFor="username" className="form-label">
+            Username
+          </label>
+          <input
+            type="text"
+            className={`form-control ${errors.name ? 'is-invalid' : ''}`}
+            id="name"
+            name="name"
+            placeholder="Enter your username"
+            value={formData.name}
+            onChange={handleChange}
+          />
+          {errors.name && <div className="invalid-feedback">{errors.name}</div>}
+        </div>
+        <div className="mb-3">
+          <label htmlFor="email" className="form-label">
+            Email
+          </label>
+          <input
+            type="email"
+            className={`form-control ${errors.email ? 'is-invalid' : ''}`}
+            id="email"
+            name="email"
+            placeholder="Enter your email"
+            value={formData.email}
+            onChange={handleChange}
+          />
+          {errors.email && <div className="invalid-feedback">{errors.email}</div>}
+        </div>
+        <div className="mb-3">
+          <label htmlFor="password" className="form-label">
+            Password
+          </label>
+          <input
+            type="password"
+            className={`form-control ${errors.password ? 'is-invalid' : ''}`}
+            id="password"
+            name="password"
+            placeholder="Enter your password"
+            value={formData.password}
+            onChange={handleChange}
+          />
+          {errors.password && <div className="invalid-feedback">{errors.password}</div>}
+        </div>
+        <button type="submit" className="btn btn-primary">
+          Register
+        </button>
+      </form>
+    </div>
   );
 };
 
